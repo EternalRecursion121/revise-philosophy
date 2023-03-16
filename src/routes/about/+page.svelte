@@ -3,7 +3,7 @@
     <div class="mt-4 mr-4">
         <h2 class="text-xl font-semibold">What is this?</h2>
         <p class="mt-2">
-            Revise Philosophy is a website which aims to be a comprehensive revision tool for the AQA Philosophy A-Level. At the core of it, I am trying to train an AI to provide formative feedback on exam questions.
+            Revise Philosophy is a website which aims to be a comprehensive revision tool for the AQA Philosophy A-Level. As the main component of the website, I am trying to train an AI to provide formative feedback on exam questions.
         </p>
         <h2 class="text-xl font-semibold mt-4">How can I help?</h2>
         <p class="mt-2">
