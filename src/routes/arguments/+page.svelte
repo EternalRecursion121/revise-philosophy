@@ -1,17 +1,15 @@
 <script lang="ts">
     import { writable } from 'svelte/store';
     import { getFirestore, collection, addDoc, onSnapshot } from 'firebase/firestore';
-    import { onMount } from 'svelte';
 
     import ArgumentItem from '$lib/ArgumentItem.svelte';
     import type { Argument } from '$lib/types/argument';
 
-    // Initialize Firebase
-    // Replace with your own Firebase config
     import { initializeApp } from 'firebase/app';
     import { firebaseConfig } from '$lib/firebaseConfig';
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+
+    export let app = initializeApp(firebaseConfig);
+    export let db = getFirestore(app);
 
     // Store for holding arguments
     const argumentsStore = writable([]);
@@ -63,7 +61,7 @@
     }
 
     let detailModalOpen = false;
-    let currentArgument = null;
+    let currentArgument:null|Argument = null;
 
     function handleDetail(event) {
         currentArgument = event.detail;
@@ -75,15 +73,25 @@
     }
 </script>
 
-<div class="flex flex-col items-center justify-center space-y-4">
+<div class="flex flex-col items-center justify-center space-y-4 px-2">
+    <h1 class="text-3xl my-6">Arguments</h1> 
+    
+     <table class="table-auto border-collapse w-full">
+        <thead>
+            <tr>
+                <th class="border-b border-gray-200 text-left px-4 py-2 font-semibold">Name</th>
+                <th class="border-b border-gray-200 text-left px-4 py-2 font-semibold">Author</th>
+                <th class="border-b border-gray-200 text-left px-4 py-2 font-semibold">Topic</th>
+            </tr>
+        </thead>
+        <tbody>
+            {#each $argumentsStore as argument (argument.id)}
+                <ArgumentItem {argument} on:detail={handleDetail} />
+            {/each}
+        </tbody>
+    </table>
 
-    <ul class="list-none list-inside">
-        {#each $argumentsStore as argument}
-            <ArgumentItem argument={argument} on:detail={handleDetail}/>
-        {/each}
-    </ul>
-
-        {#if detailModalOpen}
+    {#if detailModalOpen}
         <div class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
             <div class="bg-white p-4 rounded shadow-lg w-1/2">
                 <div class="text-2xl font-bold mb-4">{currentArgument.name}</div>
@@ -94,7 +102,7 @@
                     <span class="font-semibold">Topic:</span> {currentArgument.topic}
                 </div>
                 <div class="mb-4">
-                    <span class="font-semibold">Tags:</span> {#each currentArgument.tags as tag}{tag}{last ? '' : ', '}{/each}
+                    <span class="font-semibold">Tags:</span> {#each currentArgument.tags as tag, index}{tag}{index === currentArgument.tags.length - 1 ? '' : ', '}{/each}
                 </div>
                 <div class="mb-4">
                     <span class="font-semibold">Content:</span>
