@@ -1,11 +1,12 @@
 <!--Navbar.svelte-->
 
 <script lang="ts">
-    import { getAuth, signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
+    import { signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
     import { onMount } from 'svelte';
 
+    import { auth } from '$lib/firebaseInit';
+
     const provider = new GoogleAuthProvider();
-    const auth = getAuth();
     let user = null;
 
     onMount(() => {

@@ -1,15 +1,11 @@
 <script lang="ts">
     import { writable } from 'svelte/store';
-    import { getFirestore, collection, addDoc, onSnapshot } from 'firebase/firestore';
+    import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 
     import ArgumentItem from '$lib/ArgumentItem.svelte';
     import type { Argument } from '$lib/types/argument';
 
-    import { initializeApp } from 'firebase/app';
-    import { firebaseConfig } from '$lib/firebaseConfig';
-
-    export let app = initializeApp(firebaseConfig);
-    export let db = getFirestore(app);
+    import { db } from '$lib/firebaseInit';
 
     // Store for holding arguments
     const argumentsStore = writable([]);
@@ -33,6 +29,10 @@
         tags: '',
         content: ''
     };
+    let detailModalOpen = false;
+    let currentArgument:null|Argument = null;
+    let editMode = false;
+    let editedArgument = {};
 
     // Function to create a new argument in Firestore
     async function createArgument() {
@@ -60,8 +60,6 @@
         isCreatingArgument = false;
     }
 
-    let detailModalOpen = false;
-    let currentArgument:null|Argument = null;
 
     function handleDetail(event) {
         currentArgument = event.detail;
@@ -71,6 +69,16 @@
     function closeDetailModal() {
         detailModalOpen = false;
     }
+
+    function toggleEditMode() {
+        editMode = !editMode;
+    }
+
+    function saveEditedArgument() {
+        currentArgument = { ...editedArgument };
+        editMode = false;
+    }
+
 </script>
 
 <div class="flex flex-col items-center justify-center space-y-4 px-2">
@@ -91,9 +99,16 @@
         </tbody>
     </table>
 
-    {#if detailModalOpen}
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
-            <div class="bg-white p-4 rounded shadow-lg w-1/2">
+    <button class="py-2 px-4 bg-green-500 text-white rounded" on:click={createArgument}>
+        Add new argument
+    </button>
+
+</div>
+
+{#if detailModalOpen}
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-4 rounded shadow-lg w-1/2">
+            {#if !editMode}
                 <div class="text-2xl font-bold mb-4">{currentArgument.name}</div>
                 <div class="mb-4">
                     <span class="font-semibold">Author:</span> {currentArgument.author}
@@ -108,80 +123,102 @@
                     <span class="font-semibold">Content:</span>
                     <p>{currentArgument.content}</p>
                 </div>
-                <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded" on:click={closeDetailModal}>
-                    Close
+                <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded mr-2" on:click={toggleEditMode}>
+                        Edit
+                </button>
+            {:else}
+                <div class="mb-4">
+                    <label class="block mb-1 font-semibold text-gray-700" for="edit-name">Name:</label>
+                    <input class="w-full px-3 py-2 border border-gray-300 rounded" id="edit-name" type="text" bind:value={editedArgument.name} />
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 font-semibold text-gray-700" for="edit-author">Author:</label>
+                    <input class="w-full px-3 py-2 border border-gray-300 rounded" id="edit-author" type="text" bind:value={editedArgument.author} />
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 font-semibold text-gray-700" for="edit-topic">Topic:</label>
+                    <input class="w-full px-3 py-2 border border-gray-300 rounded" id="edit-topic" type="text" bind:value={editedArgument.topic} />
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 font-semibold text-gray-700" for="edit-tags">Tags:</label>
+                    <input class="w-full px-3 py-2 border border-gray-300 rounded" id="edit-tags" type="text" value="{editedArgument.tags.join(', ')}" on:input={(e) => editedArgument.tags = e.target.value.split(',').map(t => t.trim())} />
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 font-semibold text-gray-700" for="edit-content">Content:</label>
+                    <textarea class="w-full px-3 py-2 border border-gray-300 rounded" id="edit-content" rows="5" bind:value={editedArgument.content}></textarea>
+                </div>
+                <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded" on:click={toggleEditMode}>
+                    Cancel
+                </button>
+            {/if}
+            <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded" on:click={closeDetailModal}>
+                Close
+            </button>
+        </div>
+    </div>
+{/if}
+
+{#if isCreatingArgument}
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-4 rounded shadow-lg w-1/2">
+            <label class="block mb-2 font-bold text-gray-700" for="argument-name">
+                Enter argument name:
+            </label>
+            <input
+                class="block w-full border-gray-300 rounded shadow-sm py-2 px-3 mb-2"
+                type="text"
+                id="argument-name"
+                bind:value={newArgument.name}
+            />
+
+            <!-- Add the other fields here -->
+            <label class="block mb-2 font-bold text-gray-700" for="argument-author">
+                Enter author:
+            </label>
+            <input
+                class="block w-full border-gray-300 rounded shadow-sm py-2 px-3 mb-2"
+                type="text"
+                id="argument-author"
+                bind:value={newArgument.author}
+            />
+
+            <label class="block mb-2 font-bold text-gray-700" for="argument-topic">
+                Enter topic:
+            </label>
+            <input
+                class="block w-full border-gray-300 rounded shadow-sm py-2 px-3 mb-2"
+                type="text"
+                id="argument-topic"
+                bind:value={newArgument.topic}
+            />
+
+            <label class="block mb-2 font-bold text-gray-700" for="argument-tags">
+                Enter tags (comma separated):
+            </label>
+            <input
+                class="block w-full border-gray-300 rounded shadow-sm py-2 px-3 mb-2"
+                type="text"
+                id="argument-tags"
+                bind:value={newArgument.tags}
+            />
+
+            <label class="block mb-2 font-bold text-gray-700" for="argument-content">
+                Enter argument content:
+            </label>
+            <textarea
+                class="block w-full border-gray-300 rounded shadow-sm py-2 px-3 mb-4"
+                id="argument-content"
+                bind:value={newArgument.content}
+            ></textarea>
+
+            <div class="flex justify-end">
+                <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded mr-2" on:click={cancelArgument}>
+                    Cancel
+                </button>
+                <button class="px-4 py-2 bg-green-500 text-white rounded" on:click={saveArgument}>
+                    Save
                 </button>
             </div>
         </div>
-    {/if}
-
-    <button class="py-2 px-4 bg-green-500 text-white rounded" on:click={createArgument}>
-        Add new argument
-    </button>
-
-    {#if isCreatingArgument}
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
-            <div class="bg-white p-4 rounded shadow-lg w-1/2">
-                <label class="block mb-2 font-bold text-gray-700" for="argument-name">
-                    Enter argument name:
-                </label>
-                <input
-                    class="block w-full border-gray-300 rounded shadow-sm py-2 px-3 mb-2"
-                    type="text"
-                    id="argument-name"
-                    bind:value={newArgument.name}
-                />
-
-                <!-- Add the other fields here -->
-                <label class="block mb-2 font-bold text-gray-700" for="argument-author">
-                    Enter author:
-                </label>
-                <input
-                    class="block w-full border-gray-300 rounded shadow-sm py-2 px-3 mb-2"
-                    type="text"
-                    id="argument-author"
-                    bind:value={newArgument.author}
-                />
-
-                <label class="block mb-2 font-bold text-gray-700" for="argument-topic">
-                    Enter topic:
-                </label>
-                <input
-                    class="block w-full border-gray-300 rounded shadow-sm py-2 px-3 mb-2"
-                    type="text"
-                    id="argument-topic"
-                    bind:value={newArgument.topic}
-                />
-
-                <label class="block mb-2 font-bold text-gray-700" for="argument-tags">
-                    Enter tags (comma separated):
-                </label>
-                <input
-                    class="block w-full border-gray-300 rounded shadow-sm py-2 px-3 mb-2"
-                    type="text"
-                    id="argument-tags"
-                    bind:value={newArgument.tags}
-                />
-
-                <label class="block mb-2 font-bold text-gray-700" for="argument-content">
-                    Enter argument content:
-                </label>
-                <textarea
-                    class="block w-full border-gray-300 rounded shadow-sm py-2 px-3 mb-4"
-                    id="argument-content"
-                    bind:value={newArgument.content}
-                ></textarea>
-
-                <div class="flex justify-end">
-                    <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded mr-2" on:click={cancelArgument}>
-                        Cancel
-                    </button>
-                    <button class="px-4 py-2 bg-green-500 text-white rounded" on:click={saveArgument}>
-                        Save
-                    </button>
-                </div>
-            </div>
-        </div>
-    {/if}
-
-</div>
+    </div>
+{/if}
