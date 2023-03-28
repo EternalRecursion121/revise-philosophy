@@ -145,7 +145,7 @@
                 </div>
                 <div class="mb-4">
                     <label class="block mb-1 font-semibold text-gray-700" for="edit-content">Content:</label>
-                    <textarea class="w-full px-3 py-2 border border-gray-300 rounded" id="edit-content" rows="5" bind:value={editedArgument.content}></textarea>
+                    <textarea class="w-full px-3 py-2 border border-gray-300 rounded whitespace-pre-wrap" id="edit-content" rows="5" bind:value={editedArgument.content}></textarea>
                 </div>
                 <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded" on:click={toggleEditMode}>
                     Cancel
@@ -206,7 +206,7 @@
                 Enter argument content:
             </label>
             <textarea
-                class="block w-full border-gray-300 rounded shadow-sm py-2 px-3 mb-4"
+                class="block w-full border-gray-300 rounded shadow-sm py-2 px-3 mb-4 whitespace-pre-wrap"
                 id="argument-content"
                 bind:value={newArgument.content}
             ></textarea>
