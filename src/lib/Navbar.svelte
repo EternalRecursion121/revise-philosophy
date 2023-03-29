@@ -1,38 +1,19 @@
 <!--Navbar.svelte-->
 
 <script lang="ts">
-    import { signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
-    import { onMount } from 'svelte';
+  import { onMount } from 'svelte';
+  import { onAuthStateChanged, handleSignIn, handleSignOut } from '$lib/firebaseAuth';
 
-    import { auth } from '$lib/firebaseInit';
+  let user = null;
 
-    const provider = new GoogleAuthProvider();
-    let user = null;
-
-    onMount(() => {
-        // Check if user is already signed in
-        auth.onAuthStateChanged((firebaseUser) => {
-        if (firebaseUser) {
-            user = firebaseUser;
-        }
-        });
+  onMount(() => {
+    // Check if user is already signed in
+    onAuthStateChanged((firebaseUser) => {
+      if (firebaseUser) {
+        user = firebaseUser;
+      }
     });
-
-    async function handleSignIn() {
-        try {
-        // Sign in with Google and redirect back to current page
-        await signInWithRedirect(auth, provider);
-        } catch (error) {
-        console.error('Error signing in with Google:', error);
-        }
-    }
-
-    function handleSignOut() {
-        // Sign out user and reload page
-        auth.signOut().then(() => {
-        location.reload();
-        });
-    }
+  });
 </script>
 
 <nav class="w-screen p-2">

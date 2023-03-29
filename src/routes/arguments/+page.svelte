@@ -63,6 +63,7 @@
 
     function handleDetail(event) {
         currentArgument = event.detail;
+        console.log(currentArgument.tags)
         detailModalOpen = true;
     }
 
@@ -72,6 +73,9 @@
 
     function toggleEditMode() {
         editMode = !editMode;
+        if (editMode) {
+            editedArgument = { ...currentArgument };
+        }
     }
 
     function saveEditedArgument() {
@@ -124,7 +128,10 @@
                     <p>{currentArgument.content}</p>
                 </div>
                 <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded mr-2" on:click={toggleEditMode}>
-                        Edit
+                    Edit
+                </button>
+                <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded" on:click={closeDetailModal}>
+                    Close
                 </button>
             {:else}
                 <div class="mb-4">
@@ -147,13 +154,15 @@
                     <label class="block mb-1 font-semibold text-gray-700" for="edit-content">Content:</label>
                     <textarea class="w-full px-3 py-2 border border-gray-300 rounded whitespace-pre-wrap" id="edit-content" rows="5" bind:value={editedArgument.content}></textarea>
                 </div>
-                <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded" on:click={toggleEditMode}>
-                    Cancel
-                </button>
+                 <div class="flex justify-end">
+                    <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded mr-2" on:click={toggleEditMode}>
+                        Cancel
+                    </button>
+                    <button class="px-4 py-2 bg-green-500 text-white rounded" on:click={saveEditedArgument}>
+                        Save
+                    </button>
+                </div>
             {/if}
-            <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded" on:click={closeDetailModal}>
-                Close
-            </button>
         </div>
     </div>
 {/if}
@@ -210,7 +219,6 @@
                 id="argument-content"
                 bind:value={newArgument.content}
             ></textarea>
-
             <div class="flex justify-end">
                 <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded mr-2" on:click={cancelArgument}>
                     Cancel
