@@ -1,11 +1,15 @@
 import { getAuth, signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
 import { auth as firebaseAuth } from './firebaseInit';
+import { userStore } from './userStore';
 
 const auth = getAuth(firebaseAuth);
 const provider = new GoogleAuthProvider();
 
 const onAuthStateChanged = (callback) => {
-  return auth.onAuthStateChanged(callback);
+  return auth.onAuthStateChanged((firebaseUser) => {
+    userStore.set(firebaseUser);
+    callback(firebaseUser);
+  });
 };
 
 const handleSignIn = async () => {

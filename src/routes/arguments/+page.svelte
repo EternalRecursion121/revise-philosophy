@@ -6,6 +6,7 @@
     import type { Argument } from '$lib/types/argument';
 
     import { db } from '$lib/firebaseInit';
+    import { userStore } from '$lib/userStore';
 
     // Store for holding arguments
     const argumentsStore = writable([]);
@@ -36,7 +37,11 @@
 
     // Function to create a new argument in Firestore
     async function createArgument() {
-        isCreatingArgument = true;
+        if ($userStore) {
+            isCreatingArgument = true;
+        } else {
+            alert('You must sign in to create an argument.');
+        }
     }
 
     async function saveArgument() {
