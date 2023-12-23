@@ -7,10 +7,11 @@
         </p>
         <h2 class="text-xl font-semibold mt-4">How can I help?</h2>
         <p class="mt-2">
-            In the first phase of this project's development, I am trying to build up database for the definition of key terms and concise outlines of the key arguments and responses we have covered so far. You can contribute by adding and refining definitions and arguments within the database. 
+            This website is currently in its testing phase, and you can help improve it by providing feedback, suggestions and reporting bugs. 
         </p>
+        <h2 class="text-xl font-semibold mt-4">How do I get started?</h2>
         <p class="mt-2">
-            In order to achieve the best results, items in the database should be as concise and precise as possible. 
+            idk
         </p>
     </div>
 </div>
