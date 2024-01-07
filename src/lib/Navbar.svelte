@@ -32,11 +32,9 @@
         </div>
         <div class="flex flex-col sm:flex-row">
             <ul class="flex flex-col sm:flex-row py-2 px-4 space-y-2 sm:space-y-0 sm:space-x-5">
-                <li><a href="/arguments">Arguments</a></li>
-                <li><a href="/terms">Terms</a></li>
                 <li><a href="/about">About</a></li>
             </ul>
-            {#if user}
+            <!-- {#if user}
                 <div class="flex pb-2 px-3">
                     <span class="px-4 py-2 text-sm text-gray-700">{user.displayName}</span>
                     <button class="px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded hover:text-gray-900 hover:border-gray-400" on:click={handleSignOut}>Logout</button>
@@ -45,7 +43,7 @@
                 <div class="flex pb-2 px-3">
                     <button id="sign-in-btn" class="px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded hover:text-gray-900 hover:border-gray-400" on:click={handleSignIn}>Login</button>
                 </div>
-            {/if}
+            {/if} -->
         </div>
     </div>
     <hr class="border-gray-300">

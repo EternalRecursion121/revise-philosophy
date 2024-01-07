@@ -9,9 +9,9 @@
         <p class="mt-2">
             This website is currently in its testing phase, and you can help improve it by providing feedback, suggestions and reporting bugs. 
         </p>
-        <h2 class="text-xl font-semibold mt-4">How do I get started?</h2>
+        <!-- <h2 class="text-xl font-semibold mt-4">How do I get started?</h2>
         <p class="mt-2">
             idk
-        </p>
+        </p> -->
     </div>
 </div>
