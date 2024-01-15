@@ -22,6 +22,7 @@
   }
 
   async function getFeedbackFromAPI(userAnswer) {
+    console.log(question_type)
     try {
       const response = await fetch('https://hidden-wave-60322-3f5983108bc2.herokuapp.com/philosophy/feedback', {
       method: 'POST',

@@ -43,5 +43,5 @@
     <Progress progress={completedPercentage} estimatedTimeRemaining={etr} />
     <h1 class="text-3xl font-bold mb-6">Metaphysics of Mind</h1>
 
-    <Question question={questions[currentQuestionIndex][0]} question_type={questions[currentQuestionIndex][0]} on:nextQuestion={handleNextQuestion}/>
+    <Question question={questions[currentQuestionIndex][0]} question_type={questions[currentQuestionIndex][1]} on:nextQuestion={handleNextQuestion}/>
 </div>
