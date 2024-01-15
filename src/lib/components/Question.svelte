@@ -49,7 +49,7 @@
     // }
     // console.log(data);
 
-    const feedback = (await response.json()).replace(/\【.*?\】/g);
+    const feedback = (await response.json()).replace(/【.*?】/g).replace("\n", "<br>");
     return feedback;
       
     } catch (error) {
@@ -105,7 +105,7 @@
   <Alert color="red">
     <span>Something went wrong. Sorry about that</span>
     <br>
-    <span>Error: {feedback}</span>
+    <span>Error: {@html feedback}</span>
   </Alert>
 {/if}
 
