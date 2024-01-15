@@ -1,30 +1,37 @@
 <script>
-    import { Progress } from 'flowbite-svelte';
-    import { onMount } from 'svelte';
-
-    export let completedPercentage = 0; // e.g., 40 for 40%
+    import { Progressbar } from 'flowbite-svelte';
+  
+    export let progress = 0; // e.g., 40 for 40%
     export let estimatedTimeRemaining = ''; // e.g., '2 hours'
-
-    // Calculate width of progress bar based on completion
-    $: progressBarWidth = `${completedPercentage}%`;
-
-    let ssr = true;
-    onMount(() => {
-        ssr = false;
-    });
-</script>
-
-<div class="fixed bottom-0 left-0 right-0 bg-white shadow-md p-3">
+  </script>
+  
+  <div class="fixed bottom-0 left-0 right-0 bg-white shadow-md p-3">
     <div class="flex items-center justify-between">
-        <div class="text-sm text-gray-600">
-        Estimated Time Remaining: {estimatedTimeRemaining}
+      <!-- Left side: Progress Label -->
+      <div class="flex-1">
+        <div class="text-sm font-semibold">
+          Course Progress: <span class="text-blue-700">{`${progress}% Complete`}</span>
         </div>
-        {#if !ssr}
-            <Progress 
-            value={completedPercentage} 
-            label={`${completedPercentage}% Complete`}
-            color="blue"
-            />
-        {/if}
+        <Progressbar 
+          progress={progress}
+          label={`${progress}% Complete`} 
+          color="blue"
+        />
+      </div>
+  
+      <!-- Right side: Time Estimation -->
+      <div class="ml-4 flex-shrink-0 text-sm text-gray-600 flex-col">
+        <div class="text-sm font-semibold">
+          Estimated Time Remaining:
+        </div>
+        <div class="text-sm text-center">
+          {estimatedTimeRemaining}
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+  
+  <style>
+    /* Additional styling if needed */
+  </style>
+  
