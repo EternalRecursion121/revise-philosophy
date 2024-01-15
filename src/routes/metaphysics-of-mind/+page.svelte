@@ -5,6 +5,7 @@
     let questions = [
         ["Outline what is meant by 'qualia'. (3 marks)", "3"],
         ["What are intentional properties? (3 marks)", "3"],
+        ["Explain the distinction between substance dualism and property dualism. (5 marks)", "5"],
         ["Explain the concievability argument for substance dualism. (5 marks)", "5"],
         ["Explain the indivisibility argument for substance dualism and the objection that not everything thought of as physical is divisible. (12 marks)", "12"],
         ["Explain what is meant by philosophical zombies (3 marks)", "3"],

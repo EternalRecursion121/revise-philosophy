@@ -22,9 +22,8 @@
   }
 
   async function getFeedbackFromAPI(userAnswer) {
-    console.log(question_type)
     try {
-      const response = await fetch('https://hidden-wave-60322-3f5983108bc2.herokuapp.com/philosophy/feedback', {
+      const response = await fetch('https://3a09-51-182-252-33.ngrok-free.app/philosophy/feedback', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -32,10 +31,25 @@
       body: JSON.stringify({
         question: question,
         question_type: question_type,
-        answer: userAnswer
+         answer: userAnswer
       })
     });
-    const feedback = await response.json();
+    // const thread_id = await response.json();
+    // console.log(thread_id);
+
+    // let currentStatus = "processing";
+    // let data;
+    // while (currentStatus == "processing") {
+    //   const response = await fetch(`https://3a09-51-182-252-33.ngrok-free.app/philosophy/feedback/${thread_id}`);
+    //   data = await response.json();
+    //   currentStatus = data.status;
+    //   if (currentStatus == "processing") {
+    //     await new Promise(resolve => setTimeout(resolve, 2000));
+    //   }
+    // }
+    // console.log(data);
+
+    const feedback = (await response.json()).replace(/\【.*?\】/g);
     return feedback;
       
     } catch (error) {

@@ -3,16 +3,16 @@
     import Progress from '$lib/components/Progress.svelte';
 
     let questions = [
-        ["Outline what is meant by 'qualia'. (3 marks)", "3"],
-        ["What are intentional properties? (3 marks)", "3"],
-        ["Explain the concievability argument for substance dualism. (5 marks)", "5"],
-        ["Explain the indivisibility argument for substance dualism and the objection that not everything thought of as physical is divisible. (12 marks)", "12"],
-        ["Explain what is meant by philosophical zombies (3 marks)", "3"],
-        ["Explain the 'knowledge/Mary' argument for property dualism and the objection that Mary gains new propositional knowledge, but this is knowledge of physical facts that she already knew in a different way(the ‘New Knowledge / Old Fact’ response). (12 marks)", "12"],
-        ["Explain the problem of other minds and the response that the existence of other minds is the best hypothesis. (12 marks)", "12"],
-        ["What is the conceptual problem of interaction? (5 marks)", "5"],
-        ["Explain the objection that dualism makes a 'category mistake'. (5 marks)", "5"],
-        ["Explain epiphenomenal dualism and the challenge posed by the phenomenolgy of our mental life. (12 marks)", "12"]
+        ["What does it mean for God to be omniscient? (3 marks)", "3"],
+        ["Explain the distinction between the views of God as timeless and of God as everlasting. (5 marks)", "5"],
+        ["Explain the paradox of the stone (5 marks)", "5"],
+        ["What is the Euthryphro dilemma? (5 marks)", "5"],
+        ["Explain what is meant by God's omniscience and the objection that an omniscient God is incompatible with human free will. (12 marks)", "12"],
+        ["Explain St Anselm's ontological argument and Gaunilo's perfect island objection (12 marks)", "12"],
+        ["Explain Descartes' ontological argument and the objection that existence is not a predicate (12 marks)", "12"],
+        ["Explain Normal Malcolm's ontological argument. (5 marks)", "5"],
+        ["Explain Hume's design agument", "5"],
+        ["Explain William Paley's design argument and Hume's objection to arguments from analogy (12 marks)", "12"]
     ]
 
     let currentQuestionIndex = 0;
