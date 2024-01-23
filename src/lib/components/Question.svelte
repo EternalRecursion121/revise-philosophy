@@ -23,7 +23,7 @@
 
   async function getFeedbackFromAPI(userAnswer) {
     try {
-      const response = await fetch('https://3a09-51-182-252-33.ngrok-free.app/philosophy/feedback', {
+      const response = await fetch('http://localhost:8000/philosophy/feedback', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -49,7 +49,7 @@
     // }
     // console.log(data);
 
-    const feedback = (await response.json()).replace(/【.*?】/g).replace("\n", "<br>");
+    const feedback = (await response.json()).replace(/【.*?】/g, "").replace("\n", "<br>");
     return feedback;
       
     } catch (error) {
@@ -111,6 +111,6 @@
 
 {#if showFeedback && !isError}
   <Alert color="blue" on:dismiss={() => {showFeedback = false;}}>
-    <span>{feedback}</span>
+    <span class="whitespace-pre-wrap">{@html feedback}</span>
   </Alert>
 {/if}

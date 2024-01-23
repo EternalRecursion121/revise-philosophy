@@ -13,8 +13,8 @@
           Course Progress: <span class="text-blue-700">{`${progress}% Complete`}</span>
         </div>
         <Progressbar 
-          progress={progress}
-          label={`${progress}% Complete`} 
+          progress={progress.toFixed(1)}
+          label={`${progress.toFixed(1)}% Complete`} 
           color="blue"
         />
       </div>
