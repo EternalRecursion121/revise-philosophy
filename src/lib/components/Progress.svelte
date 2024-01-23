@@ -10,7 +10,7 @@
       <!-- Left side: Progress Label -->
       <div class="flex-1">
         <div class="text-sm font-semibold">
-          Course Progress: <span class="text-blue-700">{`${progress}% Complete`}</span>
+          Course Progress: <span class="text-blue-700">{`${progress.toFixed(1)}% Complete`}</span>
         </div>
         <Progressbar 
           progress={progress.toFixed(1)}
