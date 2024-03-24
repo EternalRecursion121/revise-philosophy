@@ -1,21 +1,5 @@
 <!--Navbar.svelte-->
 
-<script lang="ts">
-  import { onMount } from 'svelte';
-  import { onAuthStateChanged, handleSignIn, handleSignOut } from '$lib/firebaseAuth';
-
-  let user = null;
-
-  onMount(() => {
-    // Check if user is already signed in
-    onAuthStateChanged((firebaseUser) => {
-      if (firebaseUser) {
-        user = firebaseUser;
-      }
-    });
-  });
-</script>
-
 <nav class="w-screen p-2 sm:p-4 md:p-6">
     <div class="w-full flex flex-wrap justify-between">
         <div>
@@ -34,16 +18,16 @@
             <ul class="flex flex-col sm:flex-row py-2 px-4 space-y-2 sm:space-y-0 sm:space-x-5">
                 <li><a href="/about">About</a></li>
             </ul>
-            <!-- {#if user}
+            {#if true}
                 <div class="flex pb-2 px-3">
-                    <span class="px-4 py-2 text-sm text-gray-700">{user.displayName}</span>
+                    <span class="px-4 py-2 text-sm text-gray-700">USERNAME</span>
                     <button class="px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded hover:text-gray-900 hover:border-gray-400" on:click={handleSignOut}>Logout</button>
                 </div>
             {:else}
                 <div class="flex pb-2 px-3">
                     <button id="sign-in-btn" class="px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded hover:text-gray-900 hover:border-gray-400" on:click={handleSignIn}>Login</button>
                 </div>
-            {/if} -->
+            {/if}
         </div>
     </div>
     <hr class="border-gray-300">

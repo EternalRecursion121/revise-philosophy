@@ -1,3 +1,7 @@
+<script>
+    import { Button } from 'flowbite-svelte';
+</script>
+
 <div class="m-5">
     <h1 class="text-3xl font-semibold">About</h1>
     <div class="mt-4 mr-4">
